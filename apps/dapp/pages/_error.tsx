@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react';
 import type { NextPageContext } from 'next';
 
@@ -13,7 +14,7 @@ export default function Error({ statusCode }: { statusCode?: number }) {
     }}>
       <h1 style={{ fontSize: '4rem', margin: '0 0 1rem 0' }}>{statusCode || 'Error'}</h1>
       <p style={{ fontSize: '1.25rem', color: '#666', marginBottom: '1rem' }}>Something went wrong</p>
-      <a
+      <Link
         href="/"
         style={{
           padding: '0.75rem 1.5rem',
@@ -25,7 +26,7 @@ export default function Error({ statusCode }: { statusCode?: number }) {
         }}
       >
         Go Home
-      </a>
+      </Link>
     </div>
   );
 }
