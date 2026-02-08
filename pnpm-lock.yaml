@@ -463,6 +463,9 @@ importers:
       '@tanstack/react-query':
         specifier: 5.55.3
         version: 5.55.3(react@19.2.4)
+      '@wagmi/core':
+        specifier: ^2.17.2
+        version: 2.22.1(@tanstack/query-core@5.55.3)(@types/react@19.2.13)(immer@10.0.2)(react@19.2.4)(typescript@5.9.3)(use-sync-external-store@1.6.0(react@19.2.4))(viem@2.45.1(bufferutil@4.1.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76))
       lodash:
         specifier: ^4.17.21
         version: 4.17.23
