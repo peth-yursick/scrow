@@ -2,6 +2,11 @@ import { Box, Button, Container, Flex, Heading, Stack, Text, VStack } from '@cha
 import { useRouter } from 'next/router';
 import React from 'react';
 
+// Disable static generation as this page uses components that require WagmiProvider
+export const getServerSideProps = () => ({
+  props: {},
+});
+
 export default function ArbitratorNotificationPage() {
   const router = useRouter();
   const {
