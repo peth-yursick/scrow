@@ -1,6 +1,6 @@
 import { type QueryKey } from '@tanstack/react-query';
-import { ResolvedRegister } from '@wagmi/core';
-import { ReadContractOptions, readContractQueryKey } from '@wagmi/core/query';
+import { ResolvedRegister } from 'wagmi';
+import { ReadContractOptions, readContractQueryKey } from 'wagmi/query';
 import _ from 'lodash';
 import { erc20Abi, Hex, ReadContractErrorType } from 'viem';
 import { useReadContract } from 'wagmi';

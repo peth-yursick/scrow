@@ -3,8 +3,8 @@ import { fetchInvoice } from '@scrow/graphql';
 import { serverConfig } from '@scrow/utils';
 import { fetchFromIPFS } from '@scrow/utils/src/ipfs/fetchFromIPFS';
 import { dehydrate, DehydratedState, QueryClient } from '@tanstack/react-query';
-import { getBalance } from '@wagmi/core';
-import { getBalanceQueryKey, hashFn } from '@wagmi/core/query';
+import { getBalance } from 'wagmi';
+import { getBalanceQueryKey, hashFn } from 'wagmi/query';
 import { Hex } from 'viem';
 
 import {
