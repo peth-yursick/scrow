@@ -43,8 +43,8 @@ function App({ Component, pageProps }: AppProps) {
       }),
   );
 
-  // Detect error pages by checking for statusCode in pageProps
-  const isErrorPage = 'statusCode' in pageProps;
+  // Detect error pages by checking for statusCode in pageProps or skipLayout property on component
+  const isErrorPage = 'statusCode' in pageProps || (Component as any).skipLayout === true;
 
   const content = isErrorPage ? (
     <Component {...pageProps} />

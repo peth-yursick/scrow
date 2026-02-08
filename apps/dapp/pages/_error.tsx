@@ -35,3 +35,6 @@ Error.getInitialProps = ({ res, err }: NextPageContext) => {
   const statusCode = res?.statusCode ?? err?.statusCode;
   return { statusCode };
 };
+
+// Flag to skip Layout wrapper in _app.tsx
+Error.skipLayout = true;

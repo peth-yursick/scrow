@@ -29,3 +29,6 @@ export default function Custom404() {
     </div>
   );
 }
+
+// Flag to skip Layout wrapper in _app.tsx
+Custom404.skipLayout = true;
