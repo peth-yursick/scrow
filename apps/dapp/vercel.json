@@ -1,0 +1,6 @@
+{
+  "buildCommand": "cd ../.. && pnpm install --filter=@scrow/* && pnpm --filter @scrow/dapp build",
+  "installCommand": "cd ../.. && pnpm install",
+  "framework": "nextjs",
+  "outputDirectory": ".next"
+}
