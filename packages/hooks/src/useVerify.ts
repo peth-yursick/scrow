@@ -1,6 +1,15 @@
-import { InvoiceDetails, UseToastReturn } from '@scrow/types';
+import {
+  SMART_INVOICE_UPDATABLE_ABI,
+  TOASTS,
+} from '@scrow/constants';
+import { waitForSubgraphSync } from '@scrow/graphql';
+import { UseToastReturn } from '@scrow/types';
+import { errorToastHandler } from '@scrow/utils';
+import { useCallback, useState } from 'react';
+import { Hex } from 'viem';
+import { usePublicClient, useSimulateContract, useWriteContract } from 'wagmi';
 
-import { useTransaction } from './useTransaction';
+import { SimulateContractErrorType, WriteContractErrorType } from './types';
 
 export const useVerify = ({
   address,
@@ -12,17 +21,68 @@ export const useVerify = ({
   chainId: number;
   toast: UseToastReturn;
   onTxSuccess?: () => void;
-}) => {
-  // Create a minimal invoice-like object for useTransaction
-  const invoiceLike = { address } as Partial<InvoiceDetails>;
-
-  return useTransaction({
-    invoice: invoiceLike,
-    functionName: 'verify',
-    args: undefined,
+}): {
+  writeAsync: () => Promise<Hex | undefined>;
+  isLoading: boolean;
+  prepareError: SimulateContractErrorType | null;
+  writeError: WriteContractErrorType | null;
+} => {
+  const publicClient = usePublicClient();
+  const {
+    data,
+    error: prepareError,
+    isLoading: prepareLoading,
+  } = useSimulateContract({
+    address,
     chainId,
-    toastPrefix: 'useVerify',
-    onTxSuccess,
-    toast,
+    abi: SMART_INVOICE_UPDATABLE_ABI,
+    functionName: 'verify',
+    query: {
+      enabled: !!address,
+    },
   });
+
+  const [waitingForTx, setWaitingForTx] = useState(false);
+
+  const {
+    writeContractAsync,
+    error: writeError,
+    isPending: isLoading,
+  } = useWriteContract({
+    mutation: {
+      onSuccess: async hash => {
+        setWaitingForTx(true);
+        toast.loading(TOASTS.useVerify.waitingForTx);
+        const receipt = await publicClient?.waitForTransactionReceipt({ hash });
+
+        toast.loading(TOASTS.useVerify.waitingForIndex);
+        if (receipt && publicClient) {
+          await waitForSubgraphSync(publicClient.chain.id, receipt.blockNumber);
+        }
+        setWaitingForTx(false);
+
+        onTxSuccess?.();
+      },
+      onError: error => errorToastHandler('useVerify', error, toast),
+    },
+  });
+
+  const writeAsync = useCallback(async (): Promise<Hex | undefined> => {
+    try {
+      if (!data) {
+        throw new Error('simulation data is not available');
+      }
+      return writeContractAsync(data.request);
+    } catch (error) {
+      errorToastHandler('useVerify', error as Error, toast);
+      return undefined;
+    }
+  }, [writeContractAsync, data]);
+
+  return {
+    writeAsync,
+    prepareError,
+    writeError,
+    isLoading: prepareLoading || isLoading || waitingForTx,
+  };
 };

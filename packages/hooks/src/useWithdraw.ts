@@ -1,6 +1,15 @@
+import {
+  SMART_INVOICE_UPDATABLE_ABI,
+  TOASTS,
+} from '@scrow/constants';
+import { waitForSubgraphSync } from '@scrow/graphql';
 import { InvoiceDetails, UseToastReturn } from '@scrow/types';
+import { errorToastHandler } from '@scrow/utils';
+import { useCallback, useState } from 'react';
+import { Hex } from 'viem';
+import { usePublicClient, useSimulateContract, useWriteContract } from 'wagmi';
 
-import { useTransaction } from './useTransaction';
+import { SimulateContractErrorType, WriteContractErrorType } from './types';
 
 export const useWithdraw = ({
   invoice,
@@ -10,13 +19,70 @@ export const useWithdraw = ({
   invoice: Partial<InvoiceDetails>;
   onTxSuccess: () => void;
   toast: UseToastReturn;
-}) => {
-  return useTransaction({
-    invoice,
+}): {
+  writeAsync: () => Promise<Hex | undefined>;
+  isLoading: boolean;
+  prepareError: SimulateContractErrorType | null;
+  writeError: WriteContractErrorType | null;
+} => {
+  const publicClient = usePublicClient();
+  const { address } = invoice;
+
+  const {
+    data,
+    isLoading: prepareLoading,
+    error: prepareError,
+  } = useSimulateContract({
+    address: address as Hex,
     functionName: 'withdraw',
-    args: undefined,
-    toastPrefix: 'useWithdraw',
-    onTxSuccess,
-    toast,
+    abi: SMART_INVOICE_UPDATABLE_ABI,
+    args: [],
+    query: {
+      enabled: !!address,
+    },
   });
+
+  const [waitingForTx, setWaitingForTx] = useState(false);
+
+  const {
+    writeContractAsync,
+    isPending: writeLoading,
+    error: writeError,
+  } = useWriteContract({
+    mutation: {
+      onSuccess: async hash => {
+        setWaitingForTx(true);
+        toast.loading(TOASTS.useWithdraw.waitingForTx);
+        const receipt = await publicClient?.waitForTransactionReceipt({ hash });
+
+        toast.loading(TOASTS.useWithdraw.waitingForIndex);
+        if (receipt && publicClient) {
+          await waitForSubgraphSync(publicClient.chain.id, receipt.blockNumber);
+        }
+
+        setWaitingForTx(false);
+        onTxSuccess?.();
+      },
+      onError: error => errorToastHandler('useWithdraw', error, toast),
+    },
+  });
+
+  const writeAsync = useCallback(async (): Promise<Hex | undefined> => {
+    try {
+      if (!data) {
+        throw new Error('simulation data is not available');
+      }
+      return writeContractAsync(data.request);
+    } catch (error) {
+      errorToastHandler('useWithdraw', error as Error, toast);
+      return undefined;
+    }
+  }, [writeContractAsync, data]);
+
+  return {
+    writeAsync,
+    isLoading: prepareLoading || writeLoading || waitingForTx,
+    prepareError,
+    writeError,
+  };
 };
