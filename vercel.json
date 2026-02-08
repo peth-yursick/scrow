@@ -1,0 +1,5 @@
+{
+  "buildCommand": "pnpm install --frozen-lockfile=false && cd apps/dapp && pnpm build",
+  "outputDirectory": "apps/dapp/.next",
+  "framework": "nextjs"
+}
