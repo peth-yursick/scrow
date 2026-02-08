@@ -70,14 +70,6 @@ export const useInvoiceCreate = ({
   const [waitingForTx, setWaitingForTx] = useState(false);
 
   const { notifyArbitrator } = useArbitratorNotification();
-  writeAsync: () => Promise<Hex | undefined>;
-  isLoading: boolean;
-  prepareError: SimulateContractErrorType | null;
-  writeError: WriteContractErrorType | null;
-} => {
-  const chainId = useChainId();
-  const publicClient = usePublicClient();
-  const [waitingForTx, setWaitingForTx] = useState(false);
 
   const { getValues } = invoiceForm;
   const invoiceValues = getValues();
