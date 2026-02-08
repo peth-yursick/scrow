@@ -23,6 +23,11 @@ import { useForm } from 'react-hook-form';
 import { Address, Hex } from 'viem';
 import { useChainId } from 'wagmi';
 
+// Disable static generation as this page uses wagmi hooks
+export const getServerSideProps = () => ({
+  props: {},
+});
+
 export function CreateInvoiceEscrow() {
   const invoiceForm = useForm();
   const toast = useToast();

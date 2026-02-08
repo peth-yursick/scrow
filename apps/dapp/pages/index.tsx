@@ -2,6 +2,11 @@ import { Button, Flex, Heading, Text } from '@chakra-ui/react';
 import { ChakraNextLink, useMediaStyles } from '@scrow/ui';
 import React from 'react';
 
+// Disable static generation as this page uses hooks that require WagmiProvider
+export const getServerSideProps = () => ({
+  props: {},
+});
+
 function Home() {
   const { primaryButtonSize } = useMediaStyles();
 
