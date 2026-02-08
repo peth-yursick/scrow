@@ -24,6 +24,12 @@ function LockedInvoice() {
   const invoiceId = _.toLower(String(invId)) as Hex;
   const invoiceChainId = parseChainId(urlChainId);
 
+  // Call hooks early, before any conditional returns
+  const { invoiceDetails, isLoading } = useInvoiceDetails({
+    address: invoiceId,
+    chainId: invoiceChainId,
+  });
+
   useEffect(() => {
     if (invoiceId && invoiceChainId) {
       router.replace({
@@ -38,11 +44,6 @@ function LockedInvoice() {
   }
 
   const invoiceChainLabel = chainLabelFromId(invoiceChainId);
-
-  const { invoiceDetails, isLoading } = useInvoiceDetails({
-    address: invoiceId,
-    chainId: invoiceChainId,
-  });
 
   if (!isAddress(invoiceId) || (!invoiceDetails === null && !isLoading)) {
     return <InvoiceNotFound />;
