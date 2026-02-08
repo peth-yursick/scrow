@@ -43,9 +43,6 @@ function App({ Component, pageProps }: AppProps) {
       }),
   );
 
-  // Check if the current page is 404 or _error to skip Layout wrapper
-  const isErrorPage = Component.displayName === 'Error' || Component.name === 'Custom404';
-
   return (
     <WagmiProvider config={wagmiConfig}>
       <QueryClientProvider client={queryClient}>
@@ -60,13 +57,9 @@ function App({ Component, pageProps }: AppProps) {
               <ErrorBoundary>
                 <FrameProvider>
                   <OverlayContextProvider>
-                    {isErrorPage ? (
+                    <Layout>
                       <Component {...pageProps} />
-                    ) : (
-                      <Layout>
-                        <Component {...pageProps} />
-                      </Layout>
-                    )}
+                    </Layout>
                   </OverlayContextProvider>
                 </FrameProvider>
               </ErrorBoundary>
