@@ -1,11 +1,7 @@
 import { Button, Container, Heading, Stack, Text } from '@chakra-ui/react';
-import { ChakraNextLink } from '@scrow/ui';
+import Link from 'next/link';
 import React from 'react';
-
-// Disable static generation as this page uses components that require WagmiProvider
-export const getServerSideProps = () => ({
-  props: {},
-});
+import type { NextPageContext } from 'next';
 
 export default function Error({ statusCode }: { statusCode?: number }) {
   return (
@@ -17,12 +13,17 @@ export default function Error({ statusCode }: { statusCode?: number }) {
         <Text fontSize="xl" color="textMuted">
           Something went wrong
         </Text>
-        <ChakraNextLink href="/">
-          <Button colorScheme="blue" size="lg">
+        <Link href="/" passHref legacyBehavior>
+          <Button colorScheme="blue" size="lg" as="a">
             Go Home
           </Button>
-        </ChakraNextLink>
+        </Link>
       </Stack>
     </Container>
   );
 }
+
+Error.getInitialProps = ({ res, err }: NextPageContext) => {
+  const statusCode = res?.statusCode ?? err?.statusCode;
+  return { statusCode };
+};

@@ -1,11 +1,6 @@
 import { Button, Container, Heading, Stack, Text } from '@chakra-ui/react';
-import { ChakraNextLink } from '@scrow/ui';
+import Link from 'next/link';
 import React from 'react';
-
-// Disable static generation as this page uses components that require WagmiProvider
-export const getServerSideProps = () => ({
-  props: {},
-});
 
 export default function Custom404() {
   return (
@@ -17,11 +12,11 @@ export default function Custom404() {
         <Text fontSize="xl" color="textMuted">
           Page not found
         </Text>
-        <ChakraNextLink href="/">
-          <Button colorScheme="blue" size="lg">
+        <Link href="/" passHref legacyBehavior>
+          <Button colorScheme="blue" size="lg" as="a">
             Go Home
           </Button>
-        </ChakraNextLink>
+        </Link>
       </Stack>
     </Container>
   );
