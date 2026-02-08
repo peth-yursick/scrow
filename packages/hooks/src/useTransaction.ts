@@ -16,10 +16,10 @@ import {
 
 import { SimulateContractErrorType, WriteContractErrorType } from './types';
 
-export type TransactionConfig<TArgs extends any[] = []> = {
+export type TransactionConfig = {
   invoice: Partial<InvoiceDetails>;
   functionName: string;
-  args?: TArgs | undefined;
+  args?: readonly unknown[] | undefined;
   enabled?: boolean;
   chainId?: number;
   toastPrefix: keyof typeof TOASTS;
@@ -28,7 +28,7 @@ export type TransactionConfig<TArgs extends any[] = []> = {
   waitForIndex?: boolean;
 };
 
-export const useTransaction = <TArgs extends any[] = []>({
+export const useTransaction = ({
   invoice,
   functionName,
   args,
@@ -38,7 +38,7 @@ export const useTransaction = <TArgs extends any[] = []>({
   onTxSuccess,
   toast,
   waitForIndex = true,
-}: TransactionConfig<TArgs>): {
+}: TransactionConfig): {
   writeAsync: () => Promise<Hex | undefined>;
   isLoading: boolean;
   prepareError: SimulateContractErrorType | null;
@@ -57,7 +57,7 @@ export const useTransaction = <TArgs extends any[] = []>({
     address: invoice?.address as Hex,
     abi: SMART_INVOICE_UPDATABLE_ABI,
     functionName,
-    args,
+    args: args as readonly unknown[] | undefined,
     query: {
       enabled: enabled && !!invoice?.address,
     },
