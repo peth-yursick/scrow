@@ -24,6 +24,11 @@ import {
 import _ from 'lodash';
 import React from 'react';
 
+// Disable static generation as this page uses wagmi hooks
+export const getServerSideProps = () => ({
+  props: {},
+});
+
 function Contracts() {
   const isSmallScreen = useBreakpointValue({ base: true, md: false });
   const { data: tokens } = useFetchTokens();
