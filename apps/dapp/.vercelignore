@@ -1,0 +1,21 @@
+# Dependencies
+node_modules
+
+# Next.js
+.next
+out
+
+# Testing
+coverage
+*.test.ts
+*.test.tsx
+__tests__
+
+# Environment
+.env*
+!.env.example
+
+# Misc
+.DS_Store
+*.log
+.vercel

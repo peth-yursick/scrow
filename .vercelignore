@@ -1,0 +1,58 @@
+# Dependencies
+node_modules
+.pnpm-store
+
+# Build outputs
+.next
+out
+dist
+build
+.cache
+
+# Testing
+coverage
+.nyc_output
+*.test.ts
+*.test.tsx
+*.spec.ts
+*.spec.tsx
+__tests__
+test
+tests
+
+# Smart contracts
+apps/contracts
+*.sol
+*.abi
+
+# Subgraph
+apps/subgraph
+
+# Documentation
+*.md
+!README.md
+docs
+
+# CI/CD
+.github
+.husky
+.gitignore
+.eslintrc.js
+.prettierrc.json
+.syncpackrc
+.prettierrc.json
+.prettierignore
+
+# Environment
+.env
+.env.*
+!.env.example
+.sample-env
+
+# Misc
+.DS_Store
+*.log
+*.lockb
+*.swp
+.vscode
+.idea
