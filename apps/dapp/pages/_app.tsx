@@ -43,6 +43,17 @@ function App({ Component, pageProps }: AppProps) {
       }),
   );
 
+  // Detect error pages by checking for statusCode in pageProps
+  const isErrorPage = 'statusCode' in pageProps;
+
+  const content = isErrorPage ? (
+    <Component {...pageProps} />
+  ) : (
+    <Layout>
+      <Component {...pageProps} />
+    </Layout>
+  );
+
   return (
     <WagmiProvider config={wagmiConfig}>
       <QueryClientProvider client={queryClient}>
@@ -57,9 +68,7 @@ function App({ Component, pageProps }: AppProps) {
               <ErrorBoundary>
                 <FrameProvider>
                   <OverlayContextProvider>
-                    <Layout>
-                      <Component {...pageProps} />
-                    </Layout>
+                    {content}
                   </OverlayContextProvider>
                 </FrameProvider>
               </ErrorBoundary>
