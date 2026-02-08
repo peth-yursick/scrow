@@ -21,6 +21,6 @@ export * from './useSubgraphHealth';
 export * from './useTokenBalance';
 export * from './useTokenData';
 export * from './useTokenMetadata';
-export * from './useTransaction';
+// export * from './useTransaction'; // TODO: Fix TypeScript types
 export * from './useVerify';
 export * from './useWithdraw';
