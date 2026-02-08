@@ -19,7 +19,7 @@ import { SimulateContractErrorType, WriteContractErrorType } from './types';
 export type TransactionConfig = {
   invoice: Partial<InvoiceDetails>;
   functionName: string;
-  args?: readonly unknown[] | undefined;
+  args?: any[] | undefined;
   enabled?: boolean;
   chainId?: number;
   toastPrefix: keyof typeof TOASTS;
@@ -57,7 +57,7 @@ export const useTransaction = ({
     address: invoice?.address as Hex,
     abi: SMART_INVOICE_UPDATABLE_ABI,
     functionName,
-    args: args as readonly unknown[] | undefined,
+    args,
     query: {
       enabled: enabled && !!invoice?.address,
     },
