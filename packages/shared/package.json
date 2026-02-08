@@ -1,0 +1,41 @@
+{
+  "name": "@scrow/shared",
+  "description": "Unified source for shared helper functions used across the Smart Invoice protocol.",
+  "version": "0.1.28",
+  "author": "",
+  "dependencies": {
+    "@scrow/constants": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.23"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "package.json"
+  ],
+  "keywords": [
+    "escrow",
+    "ethereum",
+    "shared",
+    "scrow",
+    "scrow"
+  ],
+  "license": "MIT",
+  "main": "src/index.ts",
+  "private": false,
+  "publishConfig": {
+    "main": "dist/src/index.js",
+    "types": "dist/src/index.d.ts"
+  },
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "lint": "eslint \"**/*.{js,jsx,ts,tsx}\"",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "typecheck": "tsc --noEmit"
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "name": "@scrow/types",
+  "description": "Unified source for TypeScript types and interfaces used across the Smart Invoice protocol.",
+  "version": "0.1.28",
+  "dependencies": {
+    "@chakra-ui/react": "^2.10.9",
+    "@scrow/constants": "workspace:*",
+    "@scrow/graphql": "workspace:*",
+    "@scrow/shared": "workspace:*",
+    "react": "^19.1.0",
+    "viem": "^2.30.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.23",
+    "@types/react": "^19.1.6",
+    "typescript": "^5.8.3"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "package.json"
+  ],
+  "keywords": [
+    "escrow",
+    "ethereum",
+    "scrow",
+    "scrow",
+    "types"
+  ],
+  "license": "MIT",
+  "main": "src/index.ts",
+  "publishConfig": {
+    "main": "dist/src/index.js",
+    "types": "dist/src/index.d.ts"
+  },
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "lint": "eslint \"**/*.{js,jsx,ts,tsx}\"",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "typecheck": "tsc --noEmit"
+  }
+}

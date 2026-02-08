@@ -1,0 +1,41 @@
+{
+  "name": "@scrow/constants",
+  "description": "Unified source for configs and constants used across the Smart Invoice protocol.",
+  "version": "0.1.28",
+  "author": "",
+  "dependencies": {
+    "viem": "^2.30.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.23"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "package.json"
+  ],
+  "keywords": [
+    "constants",
+    "escrow",
+    "ethereum",
+    "scrow",
+    "scrow"
+  ],
+  "license": "MIT",
+  "main": "src/index.ts",
+  "private": false,
+  "publishConfig": {
+    "main": "dist/src/index.js",
+    "types": "dist/src/index.d.ts"
+  },
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "lint": "eslint \"**/*.{js,jsx,ts,tsx}\"",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "typecheck": "tsc --noEmit"
+  }
+}

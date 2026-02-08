@@ -1,0 +1,52 @@
+{
+  "name": "@scrow/graphql",
+  "description": "Unified source for helpers and schema used across the GraphQL services within the Smart Invoice protocol.",
+  "version": "0.1.28",
+  "author": "",
+  "dependencies": {
+    "@apollo/client": "^3.11.8",
+    "@graphql-typed-document-node/core": "^3.2.0",
+    "@scrow/constants": "workspace:*",
+    "@scrow/shared": "workspace:*",
+    "graphql-request": "^7.1.0",
+    "graphql-tag": "^2.12.6",
+    "graphql-zeus": "^6.0.0",
+    "lodash": "^4.17.21",
+    "viem": "^2.30.2"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.17.17",
+    "@types/node": "^22.15.23"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "package.json"
+  ],
+  "keywords": [
+    "escrow",
+    "ethereum",
+    "graphql",
+    "scrow",
+    "scrow"
+  ],
+  "license": "MIT",
+  "main": "src/index.ts",
+  "private": false,
+  "publishConfig": {
+    "main": "dist/src/index.js",
+    "types": "dist/src/index.d.ts"
+  },
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "generate": "zeus ./src/schema.graphql ./src/ --apollo --typedDocumentNode",
+    "lint": "eslint \"**/*.ts\"",
+    "prepare": "pnpm generate",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "typecheck": "tsc --noEmit"
+  }
+}
