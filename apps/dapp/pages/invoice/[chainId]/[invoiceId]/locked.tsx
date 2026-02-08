@@ -1,5 +1,6 @@
 import { Button, Heading, Stack, Text } from '@chakra-ui/react';
 import { useInvoiceDetails } from '@scrow/hooks';
+import { GetServerSideProps } from 'next';
 import {
   ChakraNextLink,
   Container,
@@ -134,3 +135,8 @@ function LockedInvoice() {
 }
 
 export default LockedInvoice;
+
+// Disable static generation as this page uses wagmi hooks
+export const getServerSideProps: GetServerSideProps = () => ({
+  props: {},
+});
