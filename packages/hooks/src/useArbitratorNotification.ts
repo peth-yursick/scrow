@@ -1,4 +1,3 @@
-import { useToast } from '@scrow/ui';
 import { useCallback } from 'react';
 
 interface NotificationInvoiceData {
@@ -26,10 +25,12 @@ interface NotificationOptions {
  *
  * The notification is sent via the sCrow notification API which creates
  * a Farcaster frame that can be cast to the arbitrator.
+ *
+ * Note: This hook intentionally doesn't use the toast from ui package
+ * to avoid circular dependencies during build. The notification API
+ * handles success/failure logging internally.
  */
 export function useArbitratorNotification() {
-  const toast = useToast();
-
   const notifyArbitrator = useCallback(
     async ({
       arbitratorFid,
@@ -57,7 +58,6 @@ export function useArbitratorNotification() {
         if (!response.ok) {
           const error = await response.json();
           console.error('Failed to send notification:', error);
-          // Don't throw error, just log it - notification failure shouldn't break the flow
           return false;
         }
 
@@ -71,24 +71,16 @@ export function useArbitratorNotification() {
             notificationUrl: data.data.notificationUrl,
           });
 
-          // Show a toast to confirm notification was sent
-          toast.success(
-            type === 'selected'
-              ? `Arbitrator @${arbitratorUsername} has been notified`
-              : `Arbitrator @${arbitratorUsername} has been notified of the dispute`
-          );
-
           return true;
         }
 
         return false;
       } catch (error) {
         console.error('Error sending notification:', error);
-        // Don't show error toast to user - notification failure is non-critical
         return false;
       }
     },
-    [toast]
+    []
   );
 
   return { notifyArbitrator };
