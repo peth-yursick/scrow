@@ -1,147 +1,29 @@
-import {
-  Flex,
-  Heading,
-  Link,
-  Spinner,
-  Stack,
-  Tab,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Tabs,
-  Text,
-  useBreakpointValue,
-} from '@chakra-ui/react';
-import { SUPPORTED_CHAIN_IDS } from '@scrow/constants';
-import { useFetchTokens } from '@scrow/hooks';
-import { IToken } from '@scrow/types';
-import { Container } from '@scrow/ui';
-import {
-  chainById,
-  getAccountString,
-  getAddressLink,
-  getInvoiceFactoryAddress,
-} from '@scrow/utils';
-import _ from 'lodash';
-import React, { useEffect, useState } from 'react';
+import { Flex, Spinner } from '@chakra-ui/react';
+import dynamic from 'next/dynamic';
+import React from 'react';
 
 // Disable static generation as this page uses wagmi hooks
 export const getServerSideProps = () => ({
   props: {},
 });
 
-function ContractsContent() {
-  const isSmallScreen = useBreakpointValue({ base: true, md: false });
-  const { data: tokens } = useFetchTokens();
-
-  if (!tokens) {
-    return (
-      <Container>
-        <Text>Contract Information Loading</Text>
-        <br />
-
-        <Spinner />
-      </Container>
-    );
-  }
-
-  return (
-    <Container overlay>
-      <Stack minH="800px" my={10}>
-        <Heading textTransform="uppercase" textAlign="center" color="blue.500">
-          Contracts
-        </Heading>
-
-        <Tabs>
-          <TabList>
-            {_.map(SUPPORTED_CHAIN_IDS, chainId => (
-              <Tab key={chainId}>{chainById(chainId)?.name}</Tab>
-            ))}
-          </TabList>
-          <TabPanels>
-            {_.map(SUPPORTED_CHAIN_IDS, chainId => {
-              const INVOICE_FACTORY = getInvoiceFactoryAddress(chainId) || '0x';
-              const TOKENS: IToken[] = _.filter(
-                tokens,
-                // eslint-disable-next-line eqeqeq
-                (token: IToken) => token.chainId == chainId,
-              );
-              return (
-                <TabPanel key={chainId}>
-                  <Stack spacing={1}>
-                    <Text textAlign="center">
-                      INVOICE FACTORY:{' '}
-                      <Link
-                        href={getAddressLink(chainId, INVOICE_FACTORY)}
-                        isExternal
-                        fontWeight={600}
-                        color="blue.500"
-                      >
-                        {isSmallScreen
-                          ? getAccountString(INVOICE_FACTORY)
-                          : INVOICE_FACTORY}
-                      </Link>
-                    </Text>
-
-                    {TOKENS?.map(token => {
-                      return (
-                        <Text
-                          textAlign="center"
-                          key={token.chainId.toString() + token.address}
-                        >
-                          {token.symbol}
-                          {': '}
-
-                          <Link
-                            href={getAddressLink(chainId, token.address)}
-                            isExternal
-                            fontWeight={600}
-                            color="blue.500"
-                          >
-                            {isSmallScreen
-                              ? getAccountString(token.address)
-                              : token.address}
-                          </Link>
-                        </Text>
-                      );
-                    })}
-                    <br />
-                  </Stack>
-                </TabPanel>
-              );
-            })}
-          </TabPanels>
-        </Tabs>
-      </Stack>
-    </Container>
-  );
-}
+// Dynamically import the content component with SSR disabled
+const ContractsContent = dynamic(() => import('./ContractsContent'), {
+  ssr: false,
+  loading: () => (
+    <Flex
+      justify="center"
+      align="center"
+      h="100vh"
+      w="100%"
+      bg="background"
+      color="text"
+    >
+      <Spinner size="xl" />
+    </Flex>
+  ),
+});
 
 export default function Contracts() {
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    // Small delay to ensure WagmiProvider is fully hydrated after navigation
-    const timer = setTimeout(() => {
-      setIsClient(true);
-    }, 100);
-    return () => clearTimeout(timer);
-  }, []);
-
-  if (!isClient) {
-    return (
-      <Flex
-        justify="center"
-        align="center"
-        h="100vh"
-        w="100%"
-        bg="background"
-        color="text"
-      >
-        <Spinner size="xl" />
-      </Flex>
-    );
-  }
-
   return <ContractsContent />;
 }
