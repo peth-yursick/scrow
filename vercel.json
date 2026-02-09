@@ -2,5 +2,5 @@
   "framework": "nextjs",
   "installCommand": "pnpm install --frozen-lockfile=false",
   "buildCommand": "pnpm --filter=scrow-dapp build",
-  "outputDirectory": "apps/dapp"
+  "outputDirectory": "apps/dapp/.next"
 }
