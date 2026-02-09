@@ -19,7 +19,7 @@ import { useRouter } from 'next/router';
 import { Hex, isAddress } from 'viem';
 import { useAccount, useChainId, useSwitchChain } from 'wagmi';
 
-import { useOverlay } from '../../../../contexts/OverlayContext';
+import { useOverlay } from '../../contexts/OverlayContext';
 
 export default function ViewInvoiceContent() {
   const router = useRouter();
