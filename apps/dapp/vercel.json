@@ -1,4 +1,4 @@
 {
   "framework": "nextjs",
-  "packageManager": "pnpm"
+  "installCommand": "pnpm install"
 }
