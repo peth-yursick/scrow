@@ -1,4 +1,4 @@
 {
-  "buildCommand": "pnpm --filter @scrow/dapp build",
+  "buildCommand": "pnpm --filter smartinvoicexyz-dapp build",
   "outputDirectory": "apps/dapp/.next"
 }
