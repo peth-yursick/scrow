@@ -1,4 +1,4 @@
 {
-  "buildCommand": "cd apps/dapp && pnpm build",
+  "buildCommand": "pnpm --filter @scrow/dapp build",
   "outputDirectory": "apps/dapp/.next"
 }
