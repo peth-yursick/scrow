@@ -8,7 +8,7 @@ export const getServerSideProps = () => ({
 });
 
 // Dynamically import the content component with SSR disabled
-const ContractsContent = dynamic(() => import('./_components/ContractsContent'), {
+const ContractsContent = dynamic(() => import('../components/client-pages/ContractsContent'), {
   ssr: false,
   loading: () => (
     <Flex

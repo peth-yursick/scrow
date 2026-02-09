@@ -8,7 +8,7 @@ export const getServerSideProps = () => ({
 });
 
 // Dynamically import the table component with SSR disabled
-const InvoiceDashboardTable = dynamic(() => import('./_components/InvoicesContent'), {
+const InvoiceDashboardTable = dynamic(() => import('../components/client-pages/InvoicesContent'), {
   ssr: false,
   loading: () => (
     <Flex

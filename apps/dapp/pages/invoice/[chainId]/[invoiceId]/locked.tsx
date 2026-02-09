@@ -8,7 +8,7 @@ export const getServerSideProps = () => ({
 });
 
 // Dynamically import the content component with SSR disabled
-const LockedInvoiceContent = dynamic(() => import('../../../_components/LockedInvoiceContent'), {
+const LockedInvoiceContent = dynamic(() => import('../../../../components/client-pages/LockedInvoiceContent'), {
   ssr: false,
   loading: () => (
     <Flex justify="center" align="center" h="100vh" w="100%" bg="background" color="text">
