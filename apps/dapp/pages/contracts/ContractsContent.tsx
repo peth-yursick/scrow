@@ -24,7 +24,7 @@ import {
 import _ from 'lodash';
 import React from 'react';
 
-export function ContractsContent() {
+export default function ContractsContent() {
   const isSmallScreen = useBreakpointValue({ base: true, md: false });
   const { data: tokens } = useFetchTokens();
 

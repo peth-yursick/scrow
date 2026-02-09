@@ -14,7 +14,7 @@ import { useForm } from 'react-hook-form';
 import { Address, Hex } from 'viem';
 import { useChainId } from 'wagmi';
 
-export function CreateInvoiceContent() {
+export default function CreateInvoiceContent() {
   const invoiceForm = useForm();
   const toast = useToast();
   const [currentStep, setCurrentStep] = useState<number>(1);

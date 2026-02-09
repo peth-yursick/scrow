@@ -5,13 +5,7 @@ import '@rainbow-me/rainbowkit/styles.css';
 import { ChakraProvider, ColorModeScript, CSSReset } from '@chakra-ui/react';
 import { Global } from '@emotion/react';
 import { RainbowKitProvider } from '@rainbow-me/rainbowkit';
-import {
-  AccountAvatar,
-  ErrorBoundary,
-  globalStyles,
-  Layout,
-  theme,
-} from '@scrow/ui';
+import { AccountAvatar, ErrorBoundary, globalStyles, theme } from '@scrow/ui';
 import { wagmiConfig } from '@scrow/utils';
 import {
   HydrationBoundary,
@@ -24,6 +18,7 @@ import { AppProps } from 'next/app';
 import React, { useState } from 'react';
 import { WagmiProvider } from 'wagmi';
 
+import { ClientOnlyLayout } from '../components/ClientOnlyLayout';
 import { FrameProvider } from '../contexts/FrameContext';
 import { OverlayContextProvider } from '../contexts/OverlayContext';
 
@@ -44,14 +39,16 @@ function App({ Component, pageProps }: AppProps) {
   );
 
   // Detect error pages by checking for statusCode in pageProps or skipLayout property on component
-  const isErrorPage = 'statusCode' in pageProps || (Component as any).skipLayout === true;
+  const isErrorPage =
+    'statusCode' in pageProps || (Component as any).skipLayout === true;
 
+  // For error pages, render directly. For normal pages, wrap with ClientOnlyLayout
   const content = isErrorPage ? (
     <Component {...pageProps} />
   ) : (
-    <Layout>
+    <ClientOnlyLayout>
       <Component {...pageProps} />
-    </Layout>
+    </ClientOnlyLayout>
   );
 
   return (
@@ -67,13 +64,13 @@ function App({ Component, pageProps }: AppProps) {
               <Global styles={globalStyles} />
               <ErrorBoundary>
                 <FrameProvider>
-                  <OverlayContextProvider>
-                    {content}
-                  </OverlayContextProvider>
+                  <OverlayContextProvider>{content}</OverlayContextProvider>
                 </FrameProvider>
               </ErrorBoundary>
             </ChakraProvider>
-            <ReactQueryDevtools initialIsOpen={false} />
+            {process.env.NODE_ENV === 'development' && (
+              <ReactQueryDevtools initialIsOpen={false} />
+            )}
           </RainbowKitProvider>
         </HydrationBoundary>
       </QueryClientProvider>

@@ -1,5 +1,5 @@
 import { InvoiceDashboardTable } from '@scrow/ui';
 
-export function InvoicesContent() {
+export default function InvoicesContent() {
   return <InvoiceDashboardTable />;
 }

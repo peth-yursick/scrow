@@ -29,9 +29,9 @@ import {
   sepolia,
 } from 'wagmi/chains';
 
-const APP_NAME = 'Smart Invoice';
+const APP_NAME = 'sCrow';
 const APP_DESCRIPTION =
-  'Smart Invoice is an easy-to-use tool that provides web3 freelancers with cryptocurrency invoicing, escrow, and arbitration.';
+  'sCrow is an easy-to-use tool that provides web3 freelancers with cryptocurrency invoicing, escrow, and arbitration.';
 const APP_ICON = `${BASE_URL}/favicon-32x32.png`;
 // Use default demo projectId for development if not provided
 const PROJECT_ID = process.env.NEXT_PUBLIC_WALLETCONNECT_ID || '5f1c7a0c2513a67bc80665253bc7f14c';

@@ -1,4 +1,13 @@
-import { Box, Button, Container, Flex, Heading, Stack, Text, VStack } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Container,
+  Flex,
+  Heading,
+  Stack,
+  Text,
+  VStack,
+} from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React from 'react';
 
@@ -9,13 +18,7 @@ export const getServerSideProps = () => ({
 
 export default function ArbitratorNotificationPage() {
   const router = useRouter();
-  const {
-    fid,
-    username,
-    type,
-    chainId,
-    invoiceId,
-  } = router.query as {
+  const { fid, username, type, chainId, invoiceId } = router.query as {
     fid?: string;
     username?: string;
     type?: string;
@@ -37,8 +40,10 @@ export default function ArbitratorNotificationPage() {
   }
 
   const isSelectionNotification = type === 'selected';
-  const invoiceUrl = chainId && invoiceId ? `/invoice/${chainId}/${invoiceId}` : '/';
-  const disputeUrl = chainId && invoiceId ? `/invoice/${chainId}/${invoiceId}/locked` : '/';
+  const invoiceUrl =
+    chainId && invoiceId ? `/invoice/${chainId}/${invoiceId}` : '/';
+  const disputeUrl =
+    chainId && invoiceId ? `/invoice/${chainId}/${invoiceId}/locked` : '/';
 
   return (
     <Box
@@ -111,7 +116,9 @@ export default function ArbitratorNotificationPage() {
             >
               <Text fontSize="sm" color="textSecondary">
                 <strong>Notification type:</strong>{' '}
-                {isSelectionNotification ? 'Arbitrator Selection' : 'Dispute Raised'}
+                {isSelectionNotification
+                  ? 'Arbitrator Selection'
+                  : 'Dispute Raised'}
               </Text>
               {username && (
                 <Text fontSize="sm" color="textSecondary" mt={2}>

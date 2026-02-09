@@ -1,19 +1,25 @@
+import type { NextPageContext } from 'next';
 import Link from 'next/link';
 import React from 'react';
-import type { NextPageContext } from 'next';
 
 export default function Error({ statusCode }: { statusCode?: number }) {
   return (
-    <div style={{
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      minHeight: '100vh',
-      fontFamily: 'system-ui, sans-serif'
-    }}>
-      <h1 style={{ fontSize: '4rem', margin: '0 0 1rem 0' }}>{statusCode || 'Error'}</h1>
-      <p style={{ fontSize: '1.25rem', color: '#666', marginBottom: '1rem' }}>Something went wrong</p>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        minHeight: '100vh',
+        fontFamily: 'system-ui, sans-serif',
+      }}
+    >
+      <h1 style={{ fontSize: '4rem', margin: '0 0 1rem 0' }}>
+        {statusCode || 'Error'}
+      </h1>
+      <p style={{ fontSize: '1.25rem', color: '#666', marginBottom: '1rem' }}>
+        Something went wrong
+      </p>
       <Link
         href="/"
         style={{
@@ -22,7 +28,7 @@ export default function Error({ statusCode }: { statusCode?: number }) {
           color: 'white',
           textDecoration: 'none',
           borderRadius: '0.375rem',
-          fontSize: '1rem'
+          fontSize: '1rem',
         }}
       >
         Go Home

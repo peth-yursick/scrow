@@ -12,7 +12,7 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { Hex, isAddress } from 'viem';
 
-export function LockedInvoiceContent() {
+export default function LockedInvoiceContent() {
   const router = useRouter();
   const { invoiceId: invId, chainId: urlChainId } = router.query;
   const invoiceId = _.toLower(String(invId)) as Hex;

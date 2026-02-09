@@ -1,4 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+
 import { withCors } from '../../utils/cors';
 
 interface FarcasterNotificationRequest {
@@ -64,7 +65,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     // For now, we'll return success with the frame data
     // In production, you would call the Farcaster API here
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       message: 'Notification frame created',
       data: {
@@ -73,12 +74,17 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         type,
         frame,
         // Return the URL that can be used to notify the arbitrator
-        notificationUrl: getNotificationUrl(arbitratorFid, arbitratorUsername, type, invoiceData),
+        notificationUrl: getNotificationUrl(
+          arbitratorFid,
+          arbitratorUsername,
+          type,
+          invoiceData,
+        ),
       },
     });
   } catch (error) {
     console.error('Error creating notification:', error);
-    res.status(500).json({ error: 'Failed to create notification' });
+    return res.status(500).json({ error: 'Failed to create notification' });
   }
 }
 
@@ -100,7 +106,10 @@ function getNotificationImageUrl(type: 'selected' | 'dispute'): string {
     : 'https://scrow.xyz/images/dispute-raised.png';
 }
 
-function getNotificationButtonUrl(type: 'selected' | 'dispute', invoiceData?: any): string {
+function getNotificationButtonUrl(
+  type: 'selected' | 'dispute',
+  invoiceData?: any,
+): string {
   if (type === 'selected' && invoiceData) {
     return `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/invoice/${invoiceData.chainId}/${invoiceData.invoiceId}`;
   }

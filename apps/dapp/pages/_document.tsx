@@ -1,5 +1,5 @@
 import { BASE_URL } from '@scrow/constants';
-import Document, { Head, Html } from 'next/document';
+import Document, { Head, Html, Main, NextScript } from 'next/document';
 
 const m = {
   title: 'sCrow',
@@ -29,6 +29,10 @@ export default class MyDocument extends Document {
           <meta name="fc:miniapp" content={`${JSON.stringify(m)}`} />
           <meta name="base:app_id" content="6977498c88e3bac59cf3d980" />
         </Head>
+        <body>
+          <Main />
+          <NextScript />
+        </body>
       </Html>
     );
   }

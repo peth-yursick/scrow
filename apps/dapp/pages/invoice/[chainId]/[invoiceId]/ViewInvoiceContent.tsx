@@ -21,7 +21,7 @@ import { useAccount, useChainId, useSwitchChain } from 'wagmi';
 
 import { useOverlay } from '../../../../contexts/OverlayContext';
 
-export function ViewInvoiceContent() {
+export default function ViewInvoiceContent() {
   const router = useRouter();
   const { invoiceId: invId, chainId: urlChainId } = router.query;
   const invoiceId = _.toLower(String(invId)) as Hex;

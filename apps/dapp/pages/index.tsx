@@ -1,5 +1,5 @@
 import { Button, Flex, Heading, Text } from '@chakra-ui/react';
-import { ChakraNextLink, useMediaStyles } from '@scrow/ui';
+import { ChakraNextLink } from '@scrow/ui';
 import React from 'react';
 
 // Disable static generation as this page uses hooks that require WagmiProvider
@@ -8,16 +8,12 @@ export const getServerSideProps = () => ({
 });
 
 function Home() {
-  const { primaryButtonSize } = useMediaStyles();
+  // Use static size for SSR
+  const primaryButtonSize = 'md';
 
   return (
     <Flex direction="column" align="center" justify="center" gap={6}>
-      <Heading
-        fontWeight={700}
-        fontSize={50}
-        textAlign="center"
-        color="text"
-      >
+      <Heading fontWeight={700} fontSize={50} textAlign="center" color="text">
         Welcome to sCrow
       </Heading>
 

@@ -11,12 +11,7 @@ const {
 const protocol = VERCEL_ENV === 'development' ? 'http' : 'https';
 let url = VERCEL_URL ?? 'localhost:3000';
 
-if (VERCEL_GIT_COMMIT_REF === 'main') {
-  url = `app.smartinvoice.xyz`;
-} else if (VERCEL_GIT_COMMIT_REF === 'develop') {
-  url = `dev.smartinvoice.xyz`;
-}
-
+// Use Vercel's production URL for production deployments
 if (VERCEL_ENV === 'production') {
   url = VERCEL_PROJECT_PRODUCTION_URL ?? url;
 }

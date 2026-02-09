@@ -2,7 +2,7 @@ const { NODE_ENV } = process.env;
 
 const { SI_BASE_URL } = process.env;
 
-const DEFAULT_BASE_URL = 'https://app.smartinvoice.xyz';
+const DEFAULT_BASE_URL = 'https://scrow-pi.vercel.app';
 
 /**
  * BASE_URL resolution order:
@@ -22,7 +22,7 @@ function resolveBaseUrl(): string {
   try {
     url = new URL(raw);
   } catch {
-    const msg = `[smartinvoicexyz:constants] Invalid BASE_URL "${raw}". Must be a valid absolute URL (e.g., https://example.com).`;
+    const msg = `[scrow:constants] Invalid BASE_URL "${raw}". Must be a valid absolute URL (e.g., https://example.com).`;
     if (NODE_ENV === 'production') {
       throw new Error(msg);
     } else {

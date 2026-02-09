@@ -20,5 +20,5 @@ export function convertByte32ToIpfsCidV0(str: Hex) {
   if (str.indexOf('0x') === 0) {
     newStr = str.slice(2);
   }
-  return bs58.encode(Buffer.from(`1220${newStr}`, 'hex'));
+  return bs58.encode(new Uint8Array(Buffer.from(`1220${newStr}`, 'hex')));
 }
