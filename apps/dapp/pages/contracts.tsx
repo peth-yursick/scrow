@@ -1,4 +1,5 @@
 import {
+  Flex,
   Heading,
   Link,
   Spinner,
@@ -22,14 +23,14 @@ import {
   getInvoiceFactoryAddress,
 } from '@scrow/utils';
 import _ from 'lodash';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 // Disable static generation as this page uses wagmi hooks
 export const getServerSideProps = () => ({
   props: {},
 });
 
-function Contracts() {
+function ContractsContent() {
   const isSmallScreen = useBreakpointValue({ base: true, md: false });
   const { data: tokens } = useFetchTokens();
 
@@ -116,4 +117,31 @@ function Contracts() {
   );
 }
 
-export default Contracts;
+export default function Contracts() {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    // Small delay to ensure WagmiProvider is fully hydrated after navigation
+    const timer = setTimeout(() => {
+      setIsClient(true);
+    }, 100);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (!isClient) {
+    return (
+      <Flex
+        justify="center"
+        align="center"
+        h="100vh"
+        w="100%"
+        bg="background"
+        color="text"
+      >
+        <Spinner size="xl" />
+      </Flex>
+    );
+  }
+
+  return <ContractsContent />;
+}

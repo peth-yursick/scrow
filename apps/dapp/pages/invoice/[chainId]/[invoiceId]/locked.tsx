@@ -1,11 +1,6 @@
-import { Button, Heading, Stack, Text } from '@chakra-ui/react';
+import { Button, Flex, Heading, Spinner, Stack, Text } from '@chakra-ui/react';
 import { useInvoiceDetails } from '@scrow/hooks';
-import {
-  ChakraNextLink,
-  Container,
-  InvoiceNotFound,
-  Loader,
-} from '@scrow/ui';
+import { ChakraNextLink, Container, InvoiceNotFound, Loader } from '@scrow/ui';
 import {
   chainLabelFromId,
   getIpfsLink,
@@ -14,17 +9,19 @@ import {
 } from '@scrow/utils';
 import _ from 'lodash';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Hex, isAddress } from 'viem';
 
-function LockedInvoice() {
+// Disable static generation as this page uses wagmi hooks
+export const getServerSideProps = () => ({
+  props: {},
+});
+
+function LockedInvoiceContent() {
   const router = useRouter();
   const { invoiceId: invId, chainId: urlChainId } = router.query;
-
   const invoiceId = _.toLower(String(invId)) as Hex;
   const invoiceChainId = parseChainId(urlChainId);
-
-  // Call hooks early, before any conditional returns
   const { invoiceDetails, isLoading } = useInvoiceDetails({
     address: invoiceId,
     chainId: invoiceChainId,
@@ -68,44 +65,21 @@ function LockedInvoice() {
 
   return (
     <Container overlay>
-      <Stack
-        w="100%"
-        spacing="1rem"
-        align="center"
-        justify="center"
-        my="8rem"
-        maxW="35rem"
-        px="1rem"
-      >
-        <Heading fontWeight="normal" textAlign="center">
-          Funds Securely Locked
-        </Heading>
-
+      <Stack w="100%" spacing="1rem" align="center" justify="center" my="8rem" maxW="35rem" px="1rem">
+        <Heading fontWeight="normal" textAlign="center">Funds Securely Locked</Heading>
         <Text color="white" textAlign="center" fontSize="sm" mb="1rem">
           You can view the transaction{' '}
-          <ChakraNextLink
-            href={getTxLink(invoiceChainId, dispute.txHash)}
-            isExternal
-            color="red.500"
-            textDecoration="underline"
-          >
+          <ChakraNextLink href={getTxLink(invoiceChainId, dispute.txHash)} isExternal color="red.500" textDecoration="underline">
             here
           </ChakraNextLink>
           <br />
           You can view the details on IPFS{' '}
-          <ChakraNextLink
-            href={getIpfsLink(dispute.ipfsHash)}
-            isExternal
-            color="red.500"
-            textDecoration="underline"
-          >
+          <ChakraNextLink href={getIpfsLink(dispute.ipfsHash)} isExternal color="red.500" textDecoration="underline">
             here
           </ChakraNextLink>
         </Text>
-
         <Text color="white" fontStyle="italic" textAlign="center" mb="1rem">
-          Once a decision is made, the funds will be dispersed according to the
-          ruling.
+          Once a decision is made, the funds will be dispersed according to the ruling.
           <br />
           Return to the{' '}
           <ChakraNextLink href={`/invoice/${invoiceChainLabel}/${invoiceId}`}>
@@ -113,18 +87,8 @@ function LockedInvoice() {
           </ChakraNextLink>{' '}
           to view the results.
         </Text>
-
         <ChakraNextLink href="/">
-          <Button
-            w="100%"
-            maxW="30rem"
-            variant="outline"
-            colorScheme="red"
-            textTransform="uppercase"
-            fontFamily="mono"
-            fontWeight="normal"
-            size="lg"
-          >
+          <Button w="100%" maxW="30rem" variant="outline" colorScheme="red" textTransform="uppercase" fontFamily="mono" fontWeight="normal" size="lg">
             Return Home
           </Button>
         </ChakraNextLink>
@@ -133,9 +97,24 @@ function LockedInvoice() {
   );
 }
 
-export default LockedInvoice;
+export default function LockedInvoice() {
+  const [isClient, setIsClient] = useState(false);
 
-// Disable static generation as this page uses wagmi hooks
-export const getServerSideProps = () => ({
-  props: {},
-});
+  useEffect(() => {
+    // Small delay to ensure WagmiProvider is fully hydrated after navigation
+    const timer = setTimeout(() => {
+      setIsClient(true);
+    }, 100);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (!isClient) {
+    return (
+      <Flex justify="center" align="center" h="100vh" w="100%" bg="background" color="text">
+        <Spinner size="xl" />
+      </Flex>
+    );
+  }
+
+  return <LockedInvoiceContent />;
+}
