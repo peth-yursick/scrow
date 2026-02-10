@@ -8,7 +8,6 @@ import { RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import { AccountAvatar, ErrorBoundary, globalStyles, theme } from '@scrow/ui';
 import { wagmiConfig } from '@scrow/utils';
 import {
-  HydrationBoundary,
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query';
@@ -54,8 +53,7 @@ function App({ Component, pageProps }: AppProps) {
   return (
     <WagmiProvider config={wagmiConfig}>
       <QueryClientProvider client={queryClient}>
-        <HydrationBoundary state={pageProps.dehydratedState}>
-          <RainbowKitProvider avatar={AccountAvatar}>
+        <RainbowKitProvider avatar={AccountAvatar}>
             <ChakraProvider theme={theme}>
               <ColorModeScript
                 initialColorMode={theme.config.initialColorMode}
@@ -72,7 +70,6 @@ function App({ Component, pageProps }: AppProps) {
               <ReactQueryDevtools initialIsOpen={false} />
             )}
           </RainbowKitProvider>
-        </HydrationBoundary>
       </QueryClientProvider>
     </WagmiProvider>
   );

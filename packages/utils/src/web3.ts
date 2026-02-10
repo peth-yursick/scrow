@@ -215,7 +215,6 @@ const connectors: CreateConnectorFn[] = [
 ];
 
 export const wagmiConfig = createConfig({
-  ssr: true,
   chains: SUPPORTED_CHAINS,
   transports,
   connectors,

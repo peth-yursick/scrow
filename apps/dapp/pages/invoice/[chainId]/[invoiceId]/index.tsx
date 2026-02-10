@@ -19,15 +19,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     return { notFound: true };
   }
 
-  let dehydratedState = null;
-  try {
-    const { prefetchInvoiceDetails } = await import('@scrow/hooks/src/prefetchInvoiceDetails');
-    dehydratedState = await prefetchInvoiceDetails(invoiceId, chainId);
-  } catch (error) {
-    console.error('Server-side prefetch failed:', error);
-  }
-
-  return { props: { dehydratedState } };
+  return { props: {} };
 }
 
 // Dynamically import the content component with SSR disabled
