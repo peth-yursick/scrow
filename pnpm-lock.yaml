@@ -7,6 +7,7 @@ settings:
 overrides:
   wagmi: ^2.17.2
   '@wagmi/core': ^2.17.2
+  '@rainbow-me/rainbowkit': ^2.2.5
 
 importers:
 

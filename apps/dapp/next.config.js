@@ -52,8 +52,8 @@ const nextConfig = {
         __SI_BASE_URL__: JSON.stringify(baseUrl),
       }),
     );
-    // Deduplicate wagmi packages - pnpm installs multiple copies with
-    // different peer dependency contexts, causing WagmiProvider context
+    // Deduplicate packages - pnpm installs multiple copies with
+    // different peer dependency contexts, causing React context
     // to not be shared across packages
     const wagmiDir = path.dirname(
       require.resolve('wagmi/package.json', { paths: [__dirname] }),
@@ -61,10 +61,16 @@ const nextConfig = {
     const wagmiCoreDir = path.dirname(
       require.resolve('@wagmi/core/package.json', { paths: [__dirname] }),
     );
+    const rainbowkitDir = path.dirname(
+      path.dirname(
+        require.resolve('@rainbow-me/rainbowkit', { paths: [__dirname] }),
+      ),
+    );
     config.resolve.alias = {
       ...config.resolve.alias,
       wagmi: wagmiDir,
       '@wagmi/core': wagmiCoreDir,
+      '@rainbow-me/rainbowkit': rainbowkitDir,
     };
     return config;
   },

@@ -41,6 +41,11 @@ const clients = SUPPORTED_CHAIN_IDS.reduce(
     [chainId]: new ApolloClient({
       uri: graphUrls(chainId),
       cache: caches[chainId],
+      defaultOptions: {
+        query: {
+          errorPolicy: 'all',
+        },
+      },
     }),
   }),
   {} as Record<number, ApolloClient<NormalizedCacheObject>>,
