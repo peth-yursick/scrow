@@ -8,15 +8,20 @@ import { RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import { AccountAvatar, ErrorBoundary, globalStyles, theme } from '@scrow/ui';
 import { wagmiConfig } from '@scrow/utils';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { hashFn } from '@wagmi/core/query';
 import { AppProps } from 'next/app';
+import dynamic from 'next/dynamic';
 import React, { useState } from 'react';
 import { WagmiProvider } from 'wagmi';
 
-import { ClientOnlyLayout } from '../components/ClientOnlyLayout';
 import { FrameProvider } from '../contexts/FrameContext';
 import { OverlayContextProvider } from '../contexts/OverlayContext';
+
+// Dynamically import Layout (uses wagmi hooks) with SSR disabled
+const Layout = dynamic(
+  () => import('@scrow/ui').then(mod => ({ default: mod.Layout })),
+  { ssr: false },
+);
 
 function App({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(
@@ -38,13 +43,12 @@ function App({ Component, pageProps }: AppProps) {
   const isErrorPage =
     'statusCode' in pageProps || (Component as any).skipLayout === true;
 
-  // For error pages, render directly. For normal pages, wrap with ClientOnlyLayout
   const content = isErrorPage ? (
     <Component {...pageProps} />
   ) : (
-    <ClientOnlyLayout>
+    <Layout>
       <Component {...pageProps} />
-    </ClientOnlyLayout>
+    </Layout>
   );
 
   return (
@@ -61,9 +65,6 @@ function App({ Component, pageProps }: AppProps) {
               </FrameProvider>
             </ErrorBoundary>
           </ChakraProvider>
-          {process.env.NODE_ENV === 'development' && (
-            <ReactQueryDevtools initialIsOpen={false} />
-          )}
         </RainbowKitProvider>
       </QueryClientProvider>
     </WagmiProvider>

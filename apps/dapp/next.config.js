@@ -21,6 +21,7 @@ const baseUrl = `${protocol}://${url}`;
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  devIndicators: false,
   transpilePackages: [
     '@rainbow-me/rainbowkit',
     '@scrow/constants',
