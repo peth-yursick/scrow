@@ -1,4 +1,4 @@
-import { Button, Flex, Spinner, Stack } from '@chakra-ui/react';
+import { Button, Stack } from '@chakra-ui/react';
 import { INVOICE_TYPES } from '@scrow/constants';
 import {
   InstantButtonManager,
@@ -50,12 +50,25 @@ export default function ViewInvoiceContent() {
     );
   }
 
-  const invoiceType = _.get(invoiceDetails, 'invoiceType', INVOICE_TYPES.Escrow);
-  const isInvalidChainId = !!address && !!invoiceChainId && chainId !== invoiceChainId;
+  const invoiceType = _.get(
+    invoiceDetails,
+    'invoiceType',
+    INVOICE_TYPES.Escrow,
+  );
+  const isInvalidChainId =
+    !!address && !!invoiceChainId && chainId !== invoiceChainId;
 
   return (
     <Container overlay>
-      <Stack spacing="2rem" justify="center" align="center" direction={{ base: 'column', lg: 'row' }} w="100%" px="1rem" py="8rem">
+      <Stack
+        spacing="2rem"
+        justify="center"
+        align="center"
+        direction={{ base: 'column', lg: 'row' }}
+        w="100%"
+        px="1rem"
+        py="8rem"
+      >
         <InvoiceMetaDetails invoice={invoiceDetails} />
         <Stack maxW="60rem" w="100%" spacing={4}>
           {invoiceType === INVOICE_TYPES.Instant ? (
@@ -70,7 +83,13 @@ export default function ViewInvoiceContent() {
             </>
           )}
           {isInvalidChainId && (
-            <Button bg="orange.600" _hover={{ bg: 'orange.700' }} onClick={() => switchChain?.({ chainId: invoiceChainId })} gap={2} w="100%">
+            <Button
+              bg="orange.600"
+              _hover={{ bg: 'orange.700' }}
+              onClick={() => switchChain?.({ chainId: invoiceChainId })}
+              gap={2}
+              w="100%"
+            >
               Click here to switch network to {getChainName(invoiceChainId)}
             </Button>
           )}

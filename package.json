@@ -51,6 +51,12 @@
       "prettier --write"
     ]
   },
+  "pnpm": {
+    "overrides": {
+      "wagmi": "^2.17.2",
+      "@wagmi/core": "^2.17.2"
+    }
+  },
   "packageManager": "pnpm@9.15.1",
   "private": true,
   "scripts": {

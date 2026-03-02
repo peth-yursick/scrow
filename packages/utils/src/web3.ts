@@ -211,7 +211,7 @@ const rainbowConnectors = connectorsForWallets(
 
 const connectors: CreateConnectorFn[] = [
   ...rainbowConnectors,
-  miniAppConnector as unknown as CreateConnectorFn,
+  miniAppConnector(),
 ];
 
 export const wagmiConfig = createConfig({

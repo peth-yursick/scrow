@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
+const path = require('path');
 const createBundleAnalyzerPlugin = require('@next/bundle-analyzer');
 
 const {
@@ -33,11 +34,7 @@ const nextConfig = {
     '@farcaster/frame-wagmi-connector',
   ],
   experimental: {
-    optimizePackageImports: [
-      '@rainbow-me/rainbowkit',
-      '@scrow/ui',
-      '@chakra-ui/react',
-    ],
+    optimizePackageImports: ['@scrow/ui', '@chakra-ui/react'],
   },
   async rewrites() {
     return [
@@ -54,6 +51,20 @@ const nextConfig = {
         __SI_BASE_URL__: JSON.stringify(baseUrl),
       }),
     );
+    // Deduplicate wagmi packages - pnpm installs multiple copies with
+    // different peer dependency contexts, causing WagmiProvider context
+    // to not be shared across packages
+    const wagmiDir = path.dirname(
+      require.resolve('wagmi/package.json', { paths: [__dirname] }),
+    );
+    const wagmiCoreDir = path.dirname(
+      require.resolve('@wagmi/core/package.json', { paths: [__dirname] }),
+    );
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      wagmi: wagmiDir,
+      '@wagmi/core': wagmiCoreDir,
+    };
     return config;
   },
 };

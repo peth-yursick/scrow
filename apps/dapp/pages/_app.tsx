@@ -7,10 +7,7 @@ import { Global } from '@emotion/react';
 import { RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import { AccountAvatar, ErrorBoundary, globalStyles, theme } from '@scrow/ui';
 import { wagmiConfig } from '@scrow/utils';
-import {
-  QueryClient,
-  QueryClientProvider,
-} from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { hashFn } from '@wagmi/core/query';
 import { AppProps } from 'next/app';
@@ -54,22 +51,20 @@ function App({ Component, pageProps }: AppProps) {
     <WagmiProvider config={wagmiConfig}>
       <QueryClientProvider client={queryClient}>
         <RainbowKitProvider avatar={AccountAvatar}>
-            <ChakraProvider theme={theme}>
-              <ColorModeScript
-                initialColorMode={theme.config.initialColorMode}
-              />
-              <CSSReset />
-              <Global styles={globalStyles} />
-              <ErrorBoundary>
-                <FrameProvider>
-                  <OverlayContextProvider>{content}</OverlayContextProvider>
-                </FrameProvider>
-              </ErrorBoundary>
-            </ChakraProvider>
-            {process.env.NODE_ENV === 'development' && (
-              <ReactQueryDevtools initialIsOpen={false} />
-            )}
-          </RainbowKitProvider>
+          <ChakraProvider theme={theme}>
+            <ColorModeScript initialColorMode={theme.config.initialColorMode} />
+            <CSSReset />
+            <Global styles={globalStyles} />
+            <ErrorBoundary>
+              <FrameProvider>
+                <OverlayContextProvider>{content}</OverlayContextProvider>
+              </FrameProvider>
+            </ErrorBoundary>
+          </ChakraProvider>
+          {process.env.NODE_ENV === 'development' && (
+            <ReactQueryDevtools initialIsOpen={false} />
+          )}
+        </RainbowKitProvider>
       </QueryClientProvider>
     </WagmiProvider>
   );
