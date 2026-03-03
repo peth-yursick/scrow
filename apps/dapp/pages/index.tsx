@@ -1,6 +1,7 @@
 import { Button, Flex, Heading, Text } from '@chakra-ui/react';
-import { ChakraNextLink } from '@scrow/ui';
 import React from 'react';
+
+import { ChakraNextLink } from '@/lib/ui';
 
 // Disable static generation as this page uses hooks that require WagmiProvider
 export const getServerSideProps = () => ({

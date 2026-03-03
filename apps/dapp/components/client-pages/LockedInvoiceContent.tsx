@@ -1,16 +1,17 @@
 import { Button, Heading, Stack, Text } from '@chakra-ui/react';
-import { useInvoiceDetails } from '@scrow/hooks';
-import { ChakraNextLink, Container, InvoiceNotFound, Loader } from '@scrow/ui';
+import _ from 'lodash';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+import { Hex, isAddress } from 'viem';
+
+import { useInvoiceDetails } from '@/lib/hooks';
+import { ChakraNextLink, Container, InvoiceNotFound, Loader } from '@/lib/ui';
 import {
   chainLabelFromId,
   getIpfsLink,
   getTxLink,
   parseChainId,
-} from '@scrow/utils';
-import _ from 'lodash';
-import { useRouter } from 'next/router';
-import { useEffect } from 'react';
-import { Hex, isAddress } from 'viem';
+} from '@/lib/utils';
 
 export default function LockedInvoiceContent() {
   const router = useRouter();

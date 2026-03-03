@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
-const path = require('path');
 const createBundleAnalyzerPlugin = require('@next/bundle-analyzer');
 
 const {
@@ -24,18 +23,11 @@ const nextConfig = {
   devIndicators: false,
   transpilePackages: [
     '@rainbow-me/rainbowkit',
-    '@scrow/constants',
-    '@scrow/forms',
-    '@scrow/graphql',
-    '@scrow/hooks',
-    '@scrow/types',
-    '@scrow/ui',
-    '@scrow/utils',
     '@farcaster/frame-sdk',
     '@farcaster/frame-wagmi-connector',
   ],
   experimental: {
-    optimizePackageImports: ['@scrow/ui', '@chakra-ui/react'],
+    optimizePackageImports: ['@chakra-ui/react'],
   },
   async rewrites() {
     return [
@@ -52,26 +44,6 @@ const nextConfig = {
         __SI_BASE_URL__: JSON.stringify(baseUrl),
       }),
     );
-    // Deduplicate packages - pnpm installs multiple copies with
-    // different peer dependency contexts, causing React context
-    // to not be shared across packages
-    const wagmiDir = path.dirname(
-      require.resolve('wagmi/package.json', { paths: [__dirname] }),
-    );
-    const wagmiCoreDir = path.dirname(
-      require.resolve('@wagmi/core/package.json', { paths: [__dirname] }),
-    );
-    const rainbowkitDir = path.dirname(
-      path.dirname(
-        require.resolve('@rainbow-me/rainbowkit', { paths: [__dirname] }),
-      ),
-    );
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      wagmi: wagmiDir,
-      '@wagmi/core': wagmiCoreDir,
-      '@rainbow-me/rainbowkit': rainbowkitDir,
-    };
     return config;
   },
 };

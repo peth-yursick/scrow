@@ -1,9 +1,10 @@
 import { Flex, Spinner } from '@chakra-ui/react';
-import { parseChainId } from '@scrow/utils';
 import _ from 'lodash';
 import { GetServerSidePropsContext } from 'next';
 import dynamic from 'next/dynamic';
 import { Hex } from 'viem';
+
+import { parseChainId } from '@/lib/utils';
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { invoiceId: invId, chainId: urlChainId } = context.params as {

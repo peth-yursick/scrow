@@ -1,23 +1,24 @@
 import { Button, Stack } from '@chakra-ui/react';
-import { INVOICE_TYPES } from '@scrow/constants';
+import _ from 'lodash';
+import { useRouter } from 'next/router';
+import { Hex, isAddress } from 'viem';
+import { useAccount, useChainId, useSwitchChain } from 'wagmi';
+
+import { INVOICE_TYPES } from '@/lib/constants';
 import {
   InstantButtonManager,
   InstantPaymentDetails,
   InvoiceButtonManager,
   InvoicePaymentDetails,
-} from '@scrow/forms';
-import { useInvoiceDetails } from '@scrow/hooks';
+} from '@/lib/forms';
+import { useInvoiceDetails } from '@/lib/hooks';
 import {
   Container,
   InvoiceMetaDetails,
   InvoiceNotFound,
   Loader,
-} from '@scrow/ui';
-import { getChainName, parseChainId } from '@scrow/utils';
-import _ from 'lodash';
-import { useRouter } from 'next/router';
-import { Hex, isAddress } from 'viem';
-import { useAccount, useChainId, useSwitchChain } from 'wagmi';
+} from '@/lib/ui';
+import { getChainName, parseChainId } from '@/lib/utils';
 
 import { useOverlay } from '../../contexts/OverlayContext';
 

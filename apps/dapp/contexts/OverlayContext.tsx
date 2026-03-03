@@ -1,4 +1,3 @@
-import { Modals, ModalType, OverlayContextType } from '@scrow/types';
 import React, {
   createContext,
   ReactNode,
@@ -6,6 +5,8 @@ import React, {
   useMemo,
   useState,
 } from 'react';
+
+import { Modals, ModalType, OverlayContextType } from '@/lib/types';
 
 const defaults: Modals = {
   networkChange: false,

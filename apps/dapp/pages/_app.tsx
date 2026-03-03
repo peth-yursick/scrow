@@ -5,8 +5,6 @@ import '@rainbow-me/rainbowkit/styles.css';
 import { ChakraProvider, ColorModeScript, CSSReset } from '@chakra-ui/react';
 import { Global } from '@emotion/react';
 import { RainbowKitProvider } from '@rainbow-me/rainbowkit';
-import { AccountAvatar, ErrorBoundary, globalStyles, theme } from '@scrow/ui';
-import { wagmiConfig } from '@scrow/utils';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { hashFn } from '@wagmi/core/query';
 import { AppProps } from 'next/app';
@@ -14,12 +12,15 @@ import dynamic from 'next/dynamic';
 import React, { useState } from 'react';
 import { WagmiProvider } from 'wagmi';
 
+import { AccountAvatar, ErrorBoundary, globalStyles, theme } from '@/lib/ui';
+import { wagmiConfig } from '@/lib/utils';
+
 import { FrameProvider } from '../contexts/FrameContext';
 import { OverlayContextProvider } from '../contexts/OverlayContext';
 
 // Dynamically import Layout (uses wagmi hooks) with SSR disabled
 const Layout = dynamic(
-  () => import('@scrow/ui').then(mod => ({ default: mod.Layout })),
+  () => import('@/lib/ui').then(mod => ({ default: mod.Layout })),
   { ssr: false },
 );
 

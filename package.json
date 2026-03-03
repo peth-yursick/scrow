@@ -7,7 +7,6 @@
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.25.1",
-    "@changesets/cli": "^2.27.10",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
     "@typescript-eslint/eslint-plugin": "^8.2.0",
@@ -32,7 +31,6 @@
     "lint-staged": "^15.2.9",
     "only-allow": "^1.2.1",
     "prettier": "^3.3.3",
-    "syncpack": "^13.0.0",
     "typescript": "^5.8.3"
   },
   "keywords": [
@@ -51,27 +49,17 @@
       "prettier --write"
     ]
   },
-  "pnpm": {
-    "overrides": {
-      "wagmi": "^2.17.2",
-      "@wagmi/core": "^2.17.2",
-      "@rainbow-me/rainbowkit": "^2.2.5"
-    }
-  },
   "packageManager": "pnpm@9.15.1",
   "private": true,
   "scripts": {
     "build": "pnpm -r build",
     "clean": "pnpm -r clean",
-    "dapp:build": "pnpm packages:build && pnpm --filter 'scrow-dapp' build",
+    "dapp:build": "pnpm --filter 'scrow-dapp' build",
     "dapp:dev": "pnpm --filter 'scrow-dapp' dev",
     "format": "prettier --ignore-path .prettierignore --write --plugin=prettier-plugin-solidity \"{*,**/*}.{js,jsx,ts,tsx,json,md,sol}\"",
     "lint": "pnpm -r lint",
     "lint-staged": "lint-staged",
-    "packages:build": "pnpm --filter '@scrow/*' build",
     "preinstall": "only-allow pnpm",
-    "syncpack": "syncpack list-mismatches",
-    "syncpack:fix": "syncpack fix-mismatches",
     "typecheck": "pnpm -r typecheck",
     "update-deps": "pnpm update -i -r --latest"
   },
@@ -86,8 +74,7 @@
       "**/@docusaurus/**"
     ],
     "packages": [
-      "apps/*",
-      "packages/*"
+      "apps/*"
     ]
   }
 }

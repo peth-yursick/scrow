@@ -1,6 +1,7 @@
-import { generateApiKey, keyRestrictions } from '@scrow/utils';
 import _ from 'lodash';
 import { NextApiRequest, NextApiResponse } from 'next';
+
+import { generateApiKey, keyRestrictions } from '@/lib/utils';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { method } = req;

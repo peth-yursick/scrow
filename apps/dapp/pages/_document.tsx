@@ -1,5 +1,6 @@
-import { BASE_URL } from '@scrow/constants';
 import Document, { Head, Html, Main, NextScript } from 'next/document';
+
+import { BASE_URL } from '@/lib/constants';
 
 const m = {
   title: 'sCrow',

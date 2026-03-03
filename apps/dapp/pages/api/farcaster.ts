@@ -1,5 +1,6 @@
-import { BASE_URL } from '@scrow/constants';
 import type { NextApiRequest, NextApiResponse } from 'next';
+
+import { BASE_URL } from '@/lib/constants';
 
 import { withCors } from '../../utils/cors';
 

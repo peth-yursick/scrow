@@ -11,18 +11,19 @@ import {
   Text,
   useBreakpointValue,
 } from '@chakra-ui/react';
-import { SUPPORTED_CHAIN_IDS } from '@scrow/constants';
-import { useFetchTokens } from '@scrow/hooks';
-import { IToken } from '@scrow/types';
-import { Container } from '@scrow/ui';
+import _ from 'lodash';
+import React from 'react';
+
+import { SUPPORTED_CHAIN_IDS } from '@/lib/constants';
+import { useFetchTokens } from '@/lib/hooks';
+import { IToken } from '@/lib/types';
+import { Container } from '@/lib/ui';
 import {
   chainById,
   getAccountString,
   getAddressLink,
   getInvoiceFactoryAddress,
-} from '@scrow/utils';
-import _ from 'lodash';
-import React from 'react';
+} from '@/lib/utils';
 
 export default function ContractsContent() {
   const isSmallScreen = useBreakpointValue({ base: true, md: false });
