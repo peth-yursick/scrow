@@ -21,6 +21,12 @@ const baseUrl = `${protocol}://${url}`;
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   devIndicators: false,
+  eslint: {
+    // ESLint is run separately via `pnpm lint`. The root eslint config uses
+    // plugins (airbnb, mocha, etc.) that aren't available in the dapp's
+    // isolated install on Vercel. Skip during build to avoid false failures.
+    ignoreDuringBuilds: true,
+  },
   transpilePackages: [
     '@rainbow-me/rainbowkit',
     '@farcaster/frame-sdk',

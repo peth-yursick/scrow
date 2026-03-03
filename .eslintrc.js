@@ -79,17 +79,17 @@ module.exports = {
     'dist/*',
     'tmp/*',
     '.next',
-    'packages/graphql/src/zeus/*',
+    'apps/dapp/lib/graphql/zeus/*',
     'apps/subgraph/*',
     'apps/subgraph/subgraph.template.yaml',
   ],
   settings: {
     'import/resolver': {
       typescript: {
-        project: ['tsconfig.base.json', 'packages/**/tsconfig.json'],
+        project: ['tsconfig.base.json', 'apps/**/tsconfig.json'],
       },
       node: {
-        project: ['tsconfig.base.json', 'packages/**/tsconfig.json'],
+        project: ['tsconfig.base.json', 'apps/**/tsconfig.json'],
       },
     },
   },
