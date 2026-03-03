@@ -312,6 +312,12 @@ importers:
       '@types/react-table':
         specifier: ^7.7.18
         version: 7.7.20
+      '@typescript-eslint/eslint-plugin':
+        specifier: ^8.2.0
+        version: 8.54.0(@typescript-eslint/parser@8.54.0(eslint@8.57.0)(typescript@5.9.3))(eslint@8.57.0)(typescript@5.9.3)
+      '@typescript-eslint/parser':
+        specifier: ^8.2.0
+        version: 8.54.0(eslint@8.57.0)(typescript@5.9.3)
       eslint-config-next:
         specifier: ^14.2.7
         version: 14.2.35(eslint@8.57.0)(typescript@5.9.3)
